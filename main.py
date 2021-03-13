@@ -93,7 +93,7 @@ class GitHelper:
         stdout, stderr = process.communicate()
         # print(stdout)
 
-    def run(self, start_hash=None, end_hash=None, gif_path=None):
+    def run(self, start_hash=None, end_hash=None, gif_path=None, gif_delay=200):
         '''
         Runs the utility
         start_hash: hash of revision at which to start (inclusive). If None is passed, starts at very first commit.
@@ -122,7 +122,7 @@ class GitHelper:
 
         if gif_path is not None:
             img, *imgs = frames
-            img.save(fp=gif_path, format='GIF', append_images=imgs, save_all=True, duration=200, loop=0)
+            img.save(fp=gif_path, format='GIF', append_images=imgs, save_all=True, duration=gif_delay, loop=0)
 
 
 def main():
@@ -132,6 +132,7 @@ def main():
     parser.add_argument("--pdfpath", help="path to where the PDF will be found after compilation is done. Depends on how you generate your PDF (see --command switch)", type=str, required=True)
     parser.add_argument("--subdirectory", help="subdirectory within the repository from which the command is run", type=str, default=None)
     parser.add_argument("--gifpath", help="path to the output gif generated from the frames", type=str, default=None)
+    parser.add_argument("--gifdelay", help="delay between frames in the resulting gif in milliseconds", type=int, default=200)
     parser.add_argument("--framewidth", help="width of the frames", type=int, default=800)
     parser.add_argument("--frameheight", help="height of the frames", type=int, default=600)
     parser.add_argument("--pagewidth", help="width of one page within each frame", type=int, default=80)
@@ -142,7 +143,7 @@ def main():
 
     renderer = Renderer((args.framewidth, args.frameheight), (args.pagewidth, args.pageheight))
     gh = GitHelper(renderer, args.repository, args.command, args.pdfpath, subdirectory=args.subdirectory)
-    gh.run(start_hash=args.starthash, end_hash=args.endhash, gif_path=args.gifpath)
+    gh.run(start_hash=args.starthash, end_hash=args.endhash, gif_path=args.gifpath, gif_delay=args.gifdelay)
 
 
 if __name__ == '__main__':
