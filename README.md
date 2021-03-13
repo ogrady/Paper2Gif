@@ -30,3 +30,6 @@ python3 main.py --command "make" --repository "/tmp/CopyOfMyPaperRepository" --p
 ```
 
 The above command will expect a valid git repository at `/tmp/CopyOfMyPaperRepository`. It will change the directory to `/tmp/CopyOfMyPaperRepository/doc`, since the `--subdirectory` was specified. Each revisions, starting from `8847d7cd664ba98b0dea375e4cb9847fb1afccc3`, will be checked out and compiled using `make`. The resulting images are then put together in a GIF called `movie.gif`.
+
+
+![Demonstration](demo.gif)
